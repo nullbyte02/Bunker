@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Classroom</title>
+		<link rel="icon" href="https://ssl.gstatic.com/classroom/favicon.png">
+		<link href="css/ui.css" rel="stylesheet">
+	</head>
+	<body>
+		<h1 class="title">
+			Bünker (title™)
+		</h1>
+		<div class="applist">
+			<div class="box_widget">
+				<div>
+					<h3>YouTube</h3>
+				</div>
+				<div>
+					<ul class="list">
+						<li><input id="yt_term" class="minize" placeholder="search term"><button class="btn-inline minize" onclick="ytSearch();">Go</button></li>
+						<li><input id="yt_id" class="minize" placeholder="video id"><button class="btn-inline minize" onclick="ytWatch();">Go</button></li>
+					</ul>
+				</div>
+				<script src="apps/yt-cl/js/tile.js"></script>
+			</div>
+			<div class="box_widget">
+				<div>
+					<h3>Communication</h3>
+				</div>
+				<div>
+					<ul class="list" id="comm_loginlist">
+						<li>Login:</li>
+						<li><input id="comm_user" class="minize" placeholder="username" /></li>
+						<li>
+							<input type="password" id="comm_pass" class="minize" placeholder="password" /><button
+								class="btn-primary minize floatright smaller"
+								onclick="authChat()"
+							>
+								login
+							</button>
+							<br>
+						</li>
+						<li>Sign Up:</li>
+						<li><input id="comm_s_user" class="minize" placeholder="username" /></li>
+						<li>
+							<input type="password" id="comm_s_pass" class="minize" placeholder="password" /><button
+								class="btn-primary minize floatright smaller"
+								onclick="authSign()"
+							>
+								sign up
+							</button>
+							<br>
+						</li>
+					</ul>
+				</div>
+				<script src="apps/comms/js/sha256.js"></script>
+				<script src="apps/comms/js/tile.js"></script>
+			</div>
+			<div class="box_widget">
+				<div>
+					<h3>How it works</h3>
+				</div>
+				<div>
+					<ul class="list">
+						<li class="emph">Why can't Go&zwj;Guardian see this page?</li>
+						<li>Extensions can only access file pages if allowed by the users, as they are by default not able to</li>
+						<li>Whenever this is because the school forgot to patch this setting or because it would be a security risk if they could,<br>this option is what allows these things to happen</li>
+						<li class="emph">Can I use the proxies to go on stuff?</li>
+						<li>No, the aforementioned method only hids the file tab, not any other tab. Of course, this is still<br>planned to be implemented</li>
+					</ul>
+				</div>
+			</div>
+			<div class="box_widget">
+				<div>
+					<h3>How apps works</h3>
+				</div>
+				<div>
+					<ul class="list">
+						<li class="emph">What are apps?</li>
+						<li>Each app is a different plugin to the home screen, and sometimes beyond (example: communication<br>has multiple back pages)</li>
+						<li>Since this "site" is just files on a usb drive, users can install apps as they like, for example<br>a game list app, or a news/rss feed app</li>
+						<li class="emph">How do I install apps?</li>
+						<li>Due to a technical limitation this feature is not working</li>
+					</ul>
+				</div>
+			</div>
+			<div class="box_widget">
+				<div>
+					<h3>Hacker News</h3>	
+				</div>
+				<div>
+					<ul class="list">
+					<li class="news-item"><a id="news0">Loading...</a></li>
+						<li class="news-item"><a id="news1">Loading...</a></li>
+						<li class="news-item"><a id="news2">Loading...</a></li>
+						<li class="news-item"><a id="news3">Loading...</a></li>
+						<li class="news-item"><a id="news4">Loading...</a></li>
+					</ul>
+				</div>
+				<script src="apps/hacker-news-tile/hckr-nws-snppts.js"></script>
+			</div>
+			<div class="box_widget">
+				<div>
+					<h3>Connection Statistics</h3>
+				</div>
+				<div>
+					<ul class="list">
+						<li>Server Status: <span id="server_stat">...</span></li>
+						<li>NoGuaridan Shield: <span id="noguard_stat">...</span></li>
+						<li>Encrypt/Decrypt Protocols: <span id="crypt_stat">...</span></li>
+					</ul>
+				</div>
+				<script src="apps/conn_stats/tile.js"></script>
+			</div>
+			<div class="box_widget">
+				<div>
+					<h3>Sample Game Selection</h3>	
+				</div>
+				<div>
+					<ul class="list">
+						<li><a target="_blank" rel="noreferrer noopener" href="../apps/sample-games/games.html">Go to games</a></li>
+						<li class="italic">(This list is expected to exapand significantly)</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!--
+		<div id="appimport" style="display: none;"></div>
+		<script src="config.js"></script>
+		<script src="js/loadapps.js"></script>
+		-->
+	</body>
+</html>
