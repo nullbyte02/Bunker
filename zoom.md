@@ -1,1 +1,0 @@
-So open zoom application, go to sign in, sign in with google, but clickcreate account, next go to sign in instead snd click learn more. Scroll all the way down and click privacy policy, then wcroll all they way dowb and click google. I can now use reddit and discord on my school chromebook. Video soons
