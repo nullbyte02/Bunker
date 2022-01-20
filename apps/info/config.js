@@ -1,0 +1,15 @@
+window.apps["info"] = {};
+window.apps["info"]["tile"] = `<div class="box_widget">
+	<div>
+		<h3>How it works</h3>
+	</div>
+	<div>
+		<ul class="list">
+			<li class="emph">Why can't Go&zwj;Guardian see this page?</li>
+			<li>Extensions can only access file pages if allowed by the users, as they are by default not able to</li>
+			<li>Whenever this is because the school forgot to patch this setting or because it would be a security risk if they could,<br>this option is what allows these things to happen</li>
+			<li class="emph">Can I use the proxies to go on stuff?</li>
+			<li>No, the aforementioned method only hids the file tab, not any other tab. Of course, this is still<br>planned to be implemented</li>
+		</ul>
+	</div>
+</div>`;

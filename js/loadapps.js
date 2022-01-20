@@ -27,12 +27,39 @@ function nodeScriptClone(node) {
 function nodeScriptIs(node) {
 	return node.tagName === 'SCRIPT';
 }
+function pushApp(html){
+	var div = document.createElement("div");
+	div.innerHTML = html;
+	document.getElementsByClassName("applist")[0].appendChild(div.children[0]);
+	nodeScriptReplace(document.getElementsByClassName("applist")[0].children[document.getElementsByClassName("applist")[0].children.length-1]);
+}
 (async function () {
 	var d = window._config;
 	console.log(d);
+	
 	for (var i in d.apps) {
-		var f = document.createElement("iframe");
-		f.src="apps/"+d.apps[i]+"/tile.html";
-		document.getElementsByClassName("applist")[0].appendChild(f);
+		if(window.apps[d.apps[i]] != undefined){
+			var div = document.createElement("div");
+			div.innerHTML = window.apps[d.apps[i]]["tile"];
+			document.getElementsByClassName("applist")[0].appendChild(div.children[0]);
+			nodeScriptReplace(document.getElementsByClassName("applist")[0].children[document.getElementsByClassName("applist")[0].children.length-1]);
+		}
+	}
+});
+(async function(){
+	const a =  window.apps;
+	const c = window._config.apps;
+	for(var i = 0;i<c.length;i++){
+		console.log(a[c[i]]);
+		
+		if(a[c[i]] != undefined){
+			pushApp(a[c[i]]["tile"]);
+		} else {
+			//console.log("waiting");
+			await new Promise(resolve => setTimeout(resolve, 100));
+			//console.log("stopped waiting");
+			i--;
+			continue;
+		}
 	}
 })();
