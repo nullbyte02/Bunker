@@ -29,6 +29,6 @@ window.apps["comms"]["tile"] = `<div class="box_widget">
 			</li>
 		</ul>
 	</div>
-	<script src="../apps/comms/js/sha256.js"></script>
-	<script src="../apps/comms/js/tile.js"></script>
+	<script src="apps/comms/js/sha256.js"></script>
+	<script src="apps/comms/js/tile.js"></script>
 </div>`;

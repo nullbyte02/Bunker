@@ -1,9 +1,10 @@
 window._config = {
 	"apps": [
-		"conn_stats",
+		"yt-cl",
 		"comms",
-		"info_apps",
 		"info",
+		"info_apps",
+		"conn_stats",
 		"hacker-news-tile",
 		"sample-games"
 	]
