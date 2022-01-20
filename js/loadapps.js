@@ -33,25 +33,11 @@ function pushApp(html){
 	document.getElementsByClassName("applist")[0].appendChild(div.children[0]);
 	nodeScriptReplace(document.getElementsByClassName("applist")[0].children[document.getElementsByClassName("applist")[0].children.length-1]);
 }
-(async function () {
-	var d = window._config;
-	console.log(d);
-	
-	for (var i in d.apps) {
-		if(window.apps[d.apps[i]] != undefined){
-			var div = document.createElement("div");
-			div.innerHTML = window.apps[d.apps[i]]["tile"];
-			document.getElementsByClassName("applist")[0].appendChild(div.children[0]);
-			nodeScriptReplace(document.getElementsByClassName("applist")[0].children[document.getElementsByClassName("applist")[0].children.length-1]);
-		}
-	}
-});
 (async function(){
 	const a =  window.apps;
 	const c = window._config.apps;
 	for(var i = 0;i<c.length;i++){
-		console.log(a[c[i]]);
-		
+		//console.log(a[c[i]]);
 		if(a[c[i]] != undefined){
 			pushApp(a[c[i]]["tile"]);
 		} else {
