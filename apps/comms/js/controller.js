@@ -5,6 +5,7 @@ if(
 ){
 	location.href = "error.html?t=You're%20not%20logged%20in,%20try%20going%20back%20to%20the%20app%20list%20and%20logging%20in%20from%20there";
 }
+var lastMessageAuthor = "yourmomlolololool";
 function encode(str, secret){
   var encoded = "";
   for (i=0; i<str.length;i++) {
@@ -69,7 +70,14 @@ socket.on("message", (msg)=>{
 	msg.msg = decode(msg.msg,msg.time);
 	var div = document.createElement("div");
 	div.setAttribute("class", "msg");
-	div.innerHTML = `<div class="msg_bar"><p style="color:${stringToColor(msg.name)};">${msg.name} <span class="msg_time">at ${new Date(msg.time).toLocaleString()}</span></p></div><div class="msg_text"><p>${msg.msg}</p></div>`;
+	msg.msg=msg.msg.replaceAll("<","&lt;",).replaceAll(">", "&gt;");
+	if(lastMessageAuthor!=msg.name){
+		div.innerHTML = `<div class="msg_bar"><p style="color:${stringToColor(msg.name)};">${msg.name} <span class="msg_time">at ${new Date(msg.time).toLocaleString()}</span></p></div><div class="msg_text"><p>${msg.msg}</p></div>`;
+		lastMessageAuthor=msg.name;
+	} else {
+		div.setAttribute("class", "msg reduced_margin");
+		div.innerHTML = `<div class="msg_text"><p>${msg.msg}</p></div>`;
+	}
 	elem("msg_wrapper").appendChild(div);
 	scrollToBottom(elem("msg_wrapper"));
 });
