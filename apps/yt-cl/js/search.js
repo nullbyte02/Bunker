@@ -3,7 +3,11 @@ const surl= "https://ytdl.4sure.ml/search";
 const q = urlq.get("q");
 if(q!=undefined){
 	(async function(){
-		var d = await fetch(surl+"?q="+q);
+		try{
+			var d = await fetch(surl+"?q="+q);
+		}catch(e){
+			document.getElementById("vwrap").textContent = "failed to fetch, server offline";
+		}
 		d= await d.json();
 		console.log(d);
 		handleData(d);
