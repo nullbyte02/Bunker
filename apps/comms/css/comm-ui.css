@@ -38,3 +38,7 @@
 	color: #737373;
 	font-style: italic;
 }
+.verf>img{
+	height: 1em;
+	margin-bottom: -2px;
+}

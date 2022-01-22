@@ -59,6 +59,13 @@ function decode(m,s){
 	}
 	return decoded;
 }
+function verified(msg){
+	if(msg.verified == "owner"){
+		return `${msg.name}&nbsp;<span class="verf" title="Verified "><img src="../css/verifi.png"></span>&nbsp;`
+	} else {
+		return msg.name;
+	}
+}
 var socket = io("https://secure.4sure.ml");
 socket.emit("login", {
 	user: localStorage.comm_user,
@@ -68,11 +75,12 @@ socket.emit("login", {
 var typingState = false;
 socket.on("message", (msg)=>{
 	msg.msg = decode(msg.msg,msg.time);
+	console.log(msg);
 	var div = document.createElement("div");
 	div.setAttribute("class", "msg");
 	msg.msg=msg.msg.replaceAll("<","&lt;",).replaceAll(">", "&gt;");
 	if(lastMessageAuthor!=msg.name){
-		div.innerHTML = `<div class="msg_bar"><p style="color:${stringToColor(msg.name)};">${msg.name} <span class="msg_time">at ${new Date(msg.time).toLocaleString()}</span></p></div><div class="msg_text"><p>${msg.msg}</p></div>`;
+		div.innerHTML = `<div class="msg_bar"><p style="color:${stringToColor(msg.name)};">${verified(msg)} <span class="msg_time">at ${new Date(msg.time).toLocaleString()}</span></p></div><div class="msg_text"><p>${msg.msg}</p></div>`;
 		lastMessageAuthor=msg.name;
 	} else {
 		div.setAttribute("class", "msg reduced_margin");
@@ -94,7 +102,7 @@ socket.on("type", (data) => {
 socket.on("ban", (data) => {
 	if(data.user == localStorage.comm_user){
 		localStorage.clear();
-		location.href="../../../";
+		location.href="../../";
 	}
 });
 socket.on("active", (a) => {
