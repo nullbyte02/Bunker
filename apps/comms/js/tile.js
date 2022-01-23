@@ -1,4 +1,13 @@
 const serverprefix = "https://secure.4sure.ml/";
+const allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY01234567890`~!@$%^*./-_=+\\|;:'\"";
+function check(str){
+	for(var i in str){
+		if(allowed.indexOf(str[i])==-1){
+			return true;
+		}
+	}
+	return false;
+}
 async function authChat(){
 	var u = document.getElementById("comm_user").value;
 	var p = document.getElementById("comm_pass").value;
@@ -33,6 +42,17 @@ async function authSign(){
 	}
 	var u = document.getElementById("comm_s_user").value;
 	var p = document.getElementById("comm_s_pass").value;
+	console.log(u,check(u));
+	console.log(p,check(p));
+	if(check(u)||check(p)||(u.length>20)||(p.length>20)){
+		var k = document.createElement("li");
+		k.textContent="Credentials contain invalid characters";
+		document.getElementById("comm_loginlist").appendChild(k);
+		k = document.createElement("li");
+		k.textContent="Must be shorter than 20";
+		document.getElementById("comm_loginlist").appendChild(k);
+		return false;
+	}
 	if(u!=""&&p!=""){
 		var d = await fetch(`${serverprefix}auth/register?u=${u}&p=${SHA256(p)}`);
 		d= await d.json();
