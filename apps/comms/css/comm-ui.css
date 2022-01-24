@@ -5,8 +5,8 @@
 }
 .reduced_margin{
 	margin: 0px !important;
-	padding-top: 0px !important;
-	padding-bottom: 0px !important;
+	padding-top: 1px !important;
+	padding-bottom: 1px !important;
 }
 .msg_bar>:first-child{
 	font-weight: bolder;
