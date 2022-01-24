@@ -81,8 +81,7 @@ body{
     margin: 0px;
     padding: 0px;
     background-color: #000000;
-background-image: url("red-grad3.png");
-
+	background-image: url("red-grad3.png");
 }
 *{
     color: rgb(228, 228, 228);
