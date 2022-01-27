@@ -231,6 +231,8 @@ input:focus{
     height: max-content;
     width: max-content;
 }
+p{
+text-align: center;
 }
 .Iam {
   padding: 2em 2em;
