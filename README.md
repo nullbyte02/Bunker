@@ -8,10 +8,15 @@ github releases
 ###LICENSE
 
 BUNKER (Bünker) (Bunker) (bunker) v2.1-beta
+
 GoGuardian-Proof Privacy: For Everyone
+
 GitHub Repositiory: https://github.com/Cattn/Bunker
+
 GitHub Profile: https://github.com/JavaScythe
+
 GitHub Profile: https://github.com/Cattn
+
 This work is licensed under the MIT LICENSE
 
 Copyright 2022 [removed]
