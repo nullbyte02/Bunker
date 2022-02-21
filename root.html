@@ -136,8 +136,9 @@
 					if(ag[1].indexOf("http://")==-1&&ag[1].indexOf("https://")==-1&&ag[1].indexOf("javascript:")==-1){
 						const old = ag[1];
 						ag[1]=new URL(ag[1], root.href).href;
-						ag[1]=ag[1].replace("https://example.com","");
-						console.log(`relinking ${ag[0]} to ${ag[1]}`);
+						ag[1]=ag[1].replace("https://example.com",""); 
+						console.log(`relinking ${ag[0]} to ${ag[1]} from root ${root.href}`);
+						ag[1]=encodeURIComponent(ag[1]);
 						if(ag[0].indexOf("'")==-1){
 							h=h.replace(`href="${old}"`, `href="javascript:goInternal('${ag[1]}')"`);
 						} else {
@@ -181,12 +182,13 @@
 						return "404";
 					}
 				} else if(d.type == "redirect"){
+					d.path=decodeURIComponent(d.path);
+					[d.path, d.query] = d.path.split("?");
+					console.log(`got ${d.path}`);
 					if(accessFile(d.path)!=false){
 						console.log("got "+d.path);
-						var u = new URL(d.path, "https://example.com");
-						if(u.search!=undefined){
-							document.getElementById("ifd").setAttribute("src", "about:blank"+u.search);
-							d.path = u.pathname;
+						if(d.query!=undefined){
+							document.getElementById("ifd").setAttribute("src", "about:blank?"+d.query);
 						} else {
 							document.getElementById("ifd").setAttribute("src", "about:blank");
 						}
@@ -194,7 +196,7 @@
 						historyStack.push(d.path);
 						console.log(historyStack, forwardStack, "refster");
 						document.getElementById("ifd").onload = function(){
-							document.getElementById("ifd").contentWindow.document.write(prep(window.__files["files"][d.path]));
+							document.getElementById("ifd").contentWindow.document.write(prep(window.__files["files"][d.path], d.path));
 							document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/inject.js"]);
 						}
 					}
@@ -220,6 +222,7 @@
 							var root = new URL(historyStack[historyStack.length-1], "https://example.com");
 							p = new URL(p, root.href).href;
 							p=p.replace("https://example.com", "");
+							p=encodeURIComponent(p);
 							a[i].setAttribute("href", `javascript:goInternal('${p}')`);
 						}
 					}
