@@ -129,6 +129,23 @@
 					}
 					cg = cm.exec(h);
 				}
+				var am = /<a.*?href=["'](.*?)["']/g;
+				var ag = am.exec(h);
+				while(ag !== null){
+					//console.log(ag[1].indexOf("http://"),ag[1].indexOf("https://"),ag[1].indexOf("javascript:"));
+					if(ag[1].indexOf("http://")==-1&&ag[1].indexOf("https://")==-1&&ag[1].indexOf("javascript:")==-1){
+						const old = ag[1];
+						ag[1]=new URL(ag[1], root.href).href;
+						ag[1]=ag[1].replace("https://example.com","");
+						console.log(`relinking ${ag[0]} to ${ag[1]}`);
+						if(ag[0].indexOf("'")==-1){
+							h=h.replace(`href="${old}"`, `href="javascript:goInternal('${ag[1]}')"`);
+						} else {
+							h=h.replace(`href='${old}'`, `href="javascript:goInternal('${ag[1]}')'"`);
+						}
+					}
+					ag=am.exec(h);
+				}
 				return h;
 			}
 			async function loadPath(p,s){
@@ -193,6 +210,17 @@
 						   var div = document.createElement("div");
 							div.innerHTML = "<script>"+accessFile(src)+"</script\>";
 						   s[i].replaceWith(div.children[0]);
+						}
+					}
+					var a = docc.getElementsByTagName("a");
+					for(var i=0;i<a.length;i++){
+						var p = a[i].getAttribute("href");
+						if(p==null) continue;
+						if(p.indexOf("http://")==-1&&p.indexOf("https://")==-1&&p.indexOf("javascript:")==-1){
+							var root = new URL(historyStack[historyStack.length-1], "https://example.com");
+							p = new URL(p, root.href).href;
+							p=p.replace("https://example.com", "");
+							a[i].setAttribute("href", `javascript:goInternal('${p}')`);
 						}
 					}
 				} else if(d.type == "esckey"){
