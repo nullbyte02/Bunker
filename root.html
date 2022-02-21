@@ -134,12 +134,22 @@
 				}
 				return h;
 			}
-			async function loadPath(p){
-				if(window.__files["files"][p]!=undefined){
+			async function loadPath(p,s){
+				if(s=="e"){
+					forwardStack=[];
 					historyStack.push(p);
+					console.log(historyStack, forwardStack);
+				}
+				if(window.__files["files"][p]!=undefined){
 					document.getElementById("ifd").setAttribute("src", "about:blank");
 					document.getElementById("ifd").onload = function(){
 						document.getElementById("ifd").contentWindow.document.write(prep(window.__files["files"][p]));
+						document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/inject.js"]);
+					}
+				} else {
+					document.getElementById("ifd").setAttribute("src", "about:blank");
+					document.getElementById("ifd").onload = function(){
+						document.getElementById("ifd").contentWindow.document.write("404 file is not present in compiled.js");
 						document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/inject.js"]);
 					}
 				}
@@ -166,6 +176,9 @@
 						} else {
 							document.getElementById("ifd").setAttribute("src", "about:blank");
 						}
+						forwardStack=[];
+						historyStack.push(d.path);
+						console.log(historyStack, forwardStack, "refster");
 						document.getElementById("ifd").onload = function(){
 							document.getElementById("ifd").contentWindow.document.write(prep(window.__files["files"][d.path]));
 							document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/inject.js"]);
@@ -198,10 +211,25 @@
 			});
 			function buttonHandler(b){
 				if(b==0){
-					var p = historyStack.pop();
+					if(historyStack.length>0){
+						var p = historyStack.pop();
+						console.log(p);
+						loadPath(historyStack[historyStack.length-1],"b");
+						forwardStack.push(p);
+					}
+				} else if(b==1) {
+					var p = historyStack[historyStack.length-1];
 					loadPath(p,"b");
-					forwardStack.push(p);
+				} else if(b==2){
+					if(forwardStack.length>0){
+						var p = forwardStack.pop();
+						loadPath(p,"b");
+						historyStack.push(p);
+					}
+				} else if(b==3){
+					toggleMenu();
 				}
+				console.log(historyStack, forwardStack);
 			}
 			var esct = false;
 			window.addEventListener("keyup", function(e){
