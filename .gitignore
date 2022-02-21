@@ -1,0 +1,4 @@
+node_modules
+gitignored
+.gittt
+/compiled.js

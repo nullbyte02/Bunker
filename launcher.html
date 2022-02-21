@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body{
+				background-color: #000;
+			}
+			*{
+				color: #fff;
+			}
+			button{
+				background-color: transparent;
+				border: none;
+				display: block;
+				margin-bottom: 5px;
+			}
+			span{
+				font-family: monospace;
+			}
+		</style>
+	</head>
+	<body>
+		<pre>Bünker launch page</pre>
+		<pre>This work is licensed under the MIT license<br>Features may be broken or missing<br>Subject to change<br><span id="cload"></span></pre>
+		<div>
+			<button onclick="initB();">Initialize bunker index</button><span id="closew"></span>
+		</div>
+		<script>
+			function phase(code){
+				var x = window.open("");
+				x.document.write(code);
+				return x;
+			}
+			function initB(){
+				document.getElementById("closew").textContent = "Close this page after bunker opens";
+				setTimeout(function(){
+					var e = (function(){
+						if(window.__files == undefined){
+							document.getElementById("closew").textContent = "Failed to initialize bunker: compiled.js missing";
+						} else {
+							var d = window.__files["files"]["/root.html"];
+							return d;
+						}
+					})();
+					phase(e).window.__files = window.__files;
+				}, 2000);
+			}
+		</script>
+		<script src="/compiled.js"></script>
+		<script>document.getElementById("cload").textContent = "compiled.js loaded"</script>
+	</body>
+</html>
