@@ -25,7 +25,6 @@
 				position: absolute;
 				top: 10px;
 				left: 10px;
-				border: 1px solid red;
 				height: 3vh;
 				display: flex;
 			}
@@ -85,10 +84,8 @@
 				}
 				if(state){
 					document.getElementById("imd").style.display = "none";
-					document.getElementById("ifd").style.height = "98vh";
 				} else {
 					document.getElementById("imd").style.display = "flex";
-					document.getElementById("ifd").style.height = "97vh";
 				}
 			}
 			function accessFile(path){
@@ -243,18 +240,23 @@
 						}, 500)
 					}
 				}
-			})
+			});
 			function init(){ loadPath("/index.html", "e"); }
 			setTimeout(init, 1000);
 		</script>
 	</head>
 	<body>
 		<div id="imd">
-          <button onclick="buttonHandler(0)"><span class="st">🡨</span><span class="ht">&nbsp;go back a page</span></button>
-          <button onclick="buttonHandler(1)" class="bump"><span class="st">⟲</span><span class="ht">&nbsp;reload current page</span></button>
-          <button onclick="buttonHandler(2)"><span class="st">🡪</span><span class="ht">&nbsp;go forward a page</span></button>
-          <button onclick="buttonHandler(3)" class="bump"><span class="st">🡬</span><span class="ht">&nbsp;hit esc twice to exit</span></button>
-          <button onclick="buttonHandler(4)" class="over"><span class="st">🡦</span><span class="ht">&nbsp;enter custom urlpath&nbsp;<input type="text"></span></button>
+			<button onclick="buttonHandler(0)"><span class="st">🡨</span><span class="ht">&nbsp;go back a page</span></button>
+			<button onclick="buttonHandler(1)" class="bump"><span class="st">⟲</span><span class="ht">&nbsp;reload current page</span></button>
+			<button onclick="buttonHandler(2)"><span class="st">🡪</span><span class="ht">&nbsp;go forward a page</span></button>
+			<button onclick="buttonHandler(3)" class="bump"><span class="st">🡬</span><span class="ht">&nbsp;hit esc twice to exit</span></button>
+			<button class="over"><span class="st">🡦</span><span class="ht">&nbsp;enter custom urlpath&nbsp;<input type="text" id="curlin"></span></button>
+			<script>document.getElementById("imd").style.display = "flex";document.getElementById("curlin").addEventListener("keyup", function(e){
+				if(e.code=="Enter"){
+					loadPath(document.getElementById("curlin").value,"e");
+				}
+			});</script>
       </div>
 		<iframe id="ifd" src="about:blank"></iframe>
 	</body>
