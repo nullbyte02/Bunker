@@ -70,7 +70,8 @@
 				font-family: Arial, Helvetica, sans-serif;
 			}
 		</style>
-		<script src="/compiled.js"></script>
+		<!--<script src="/compiled.js"></script>-->
+		<script>{{COMPILEDJS}}</script>
 		<script>
 			var historyStack = [];
 			var forwardStack = [];
@@ -113,19 +114,16 @@
 					}
 					jg = jm.exec(h);
 				}
-				var cm = /<link.*?href=["'](.*?)["']/gm;
+				var cm = /<link.*?href=["'](.*?)["'].*?>/g;
 				var cg = cm.exec(h);
 				while(cg !== null){
-					if(cg[0].indexOf("stylesheet")!=-1){
-						cg[1]=new URL(cg[i], root.href).href;
-						cg[1]=cg[1].replace("https://example.com","");
-						console.log("replacing ",cg[0]+" with path "+cg[1]);
-						if(window.__files["files"][cg[1]] != undefined){
-							h=h.replace(cg[0], "<style>"+window.__files["files"][cg[1]]+"</style\>");
-						} else {
-							console.log(cg[1]);
-							h.replace(cg[0], ``);
-						}
+					cg[1]=new URL(cg[1], root.href).href;
+					cg[1]=cg[1].replace("https://example.com","");
+					console.log("replacing ",cg[0]+" with path "+cg[1]);
+					if(window.__files["files"][cg[1]] != undefined){
+						h=h.replace(cg[0], "<style>"+window.__files["files"][cg[1]]+"</style\>");
+					} else {
+						console.log(`ignoring wrong or external ${cg[1]}`);
 					}
 					cg = cm.exec(h);
 				}
@@ -169,6 +167,35 @@
 					}
 				}
 			}
+			function nodeScriptReplace(node) {
+				if (nodeScriptIs(node) === true) {
+					node.parentNode.replaceChild(nodeScriptClone(node), node);
+				} else {
+					var i = -1,
+						children = node.childNodes;
+					while (++i < children.length) {
+						nodeScriptReplace(children[i]);
+					}
+				}
+
+				return node;
+			}
+			function nodeScriptClone(node) {
+				var script = document.createElement('script');
+				script.text = node.innerHTML;
+
+				var i = -1,
+					attrs = node.attributes,
+					attr;
+				while (++i < attrs.length) {
+					script.setAttribute((attr = attrs[i]).name, attr.value);
+				}
+				return script;
+			}
+
+			function nodeScriptIs(node) {
+				return node.tagName === 'SCRIPT';
+			}
 			window.addEventListener('message', function (e) {
 				const d = e.data;
 				if(d.type=="fetch"){
@@ -211,7 +238,8 @@
 						if(accessFile(src)!=false){
 						   var div = document.createElement("div");
 							div.innerHTML = "<script>"+accessFile(src)+"</script\>";
-						   s[i].replaceWith(div.children[0]);
+							s[i].replaceWith(div.children[0]);
+							nodeScriptReplace(s[i]);
 						}
 					}
 					var a = docc.getElementsByTagName("a");

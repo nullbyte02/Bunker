@@ -169,6 +169,10 @@ app.post("/auth/register",(req,res)=>{
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	for (let i in filenames) {
+		if(req.path.match(".js")&&req.path.indexOf("compiled.js")==-1){
+			res.send("<pre>NOOOOOOOOOOOO</pre>");
+			return "";
+		}
 		if (req.path.match(filenames[i])) {
 			res.sendFile(path.join(__dirname + req.path));
 			break;

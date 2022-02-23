@@ -25,15 +25,23 @@
 		<div>
 			<button onclick="initB();">Initialize bunker index</button><span id="closew"></span>
 		</div>
+		<iframe src="https://provider.i10.repl.co"></iframe>
 		<script>
 			function phase(code){
 				var x = window.open("");
 				x.document.write(code);
 				return x;
 			}
+			function pm(code,t){
+				document.getElementsByTagName("iframe")[0].contentWindow.postMessage({
+					"type": t,
+					"code": code
+				}, "*");
+			}
 			function initB(){
 				document.getElementById("closew").textContent = "Close this page after bunker opens";
 				setTimeout(function(){
+					//pm(`var x = window.open("");x.document.write(`);
 					var e = (function(){
 						if(window.__files == undefined){
 							document.getElementById("closew").textContent = "Failed to initialize bunker: compiled.js missing";
@@ -42,11 +50,24 @@
 							return d;
 						}
 					})();
-					phase(e).window.__files = window.__files;
+					//phase(e.replace("{{COMPILEDJS}}", `window.__files=JSON.parse(decodeURIComponent("${encodeURIComponent(JSON.stringify(window.__files))}"))`))
+					//var b = `window.open("").document.write(decodeURIComponent("${
+					//	encodeURIComponent()
+					//}"))`;
+					//var k = e.replace("{{COMPILEDJS}}", `window.__files=JSON.parse(decodeURIComponent("${encodeURIComponent())}"))`);
+					//var b = encodeURIComponent(e);
+					//var j = encodeURIComponent(JSON.stringify(window.__files));
+					//console.log(b.indexOf("%7B%7BCOMPILEDJS%7D%7D"));
+					//var k = b.replace("%7B%7BCOMPILEDJS%7D%7D", `window.__files=JSON.parse(decodeURIComponent(\\"${j}\\"))`);delete b; delete j;
+					//var a = `window.open("").document.write(decodeURIComponent("${
+					//	k
+					//}"))`;
+					pm(`window.__files=${JSON.stringify(window.__files)}`, "exec");
+					pm(e, "load");
 				}, 2000);
 			}
 		</script>
-		<script src="/compiled.js"></script>
+		<script src="compiled.js"></script>
 		<script>document.getElementById("cload").textContent = "compiled.js loaded"</script>
 	</body>
 </html>
