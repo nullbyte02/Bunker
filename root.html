@@ -107,9 +107,12 @@
 					jg[1]=jg[1].replace("https://example.com","");
 					console.log("replacing ",jg[0]+" with path "+jg[1]);
 					if(window.__files["files"][jg[1]] != undefined){
-						h=h.replace(jg[0], "<script>"+window.__files["files"][jg[1]]+"</script\>");
+						//console.log(`indexOf replaced: ${h.indexOf(jg[0])} with char ${h[h.indexOf(jg[0])]}`);
+						console.log("replacing script with index of special: "+(`<script>${window.__files["files"][jg[1]]}</script\>`).indexOf("'$'"))
+						h=h.replace(jg[0], `<script>${window.__files["files"][jg[1]]}</script\>`);
+						//console.log("<script>"+window.__files["files"][jg[1]]+"</script\>");
 					} else {
-						console.log(jg[1]);
+						//console.log(jg[1]);
 						h=h.replace(jg[0], ``);
 					}
 					jg = jm.exec(h);
@@ -145,6 +148,7 @@
 					}
 					ag=am.exec(h);
 				}
+				//console.log(h);
 				return h;
 			}
 			async function loadPath(p,s){
@@ -157,13 +161,13 @@
 					document.getElementById("ifd").setAttribute("src", "about:blank");
 					document.getElementById("ifd").onload = function(){
 						document.getElementById("ifd").contentWindow.document.write(prep(window.__files["files"][p]));
-						document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/inject.js"]);
+						document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/js/inject.js"]);
 					}
 				} else {
 					document.getElementById("ifd").setAttribute("src", "about:blank");
 					document.getElementById("ifd").onload = function(){
 						document.getElementById("ifd").contentWindow.document.write("404 file is not present in compiled.js");
-						document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/inject.js"]);
+						document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/js/inject.js"]);
 					}
 				}
 			}
@@ -224,7 +228,7 @@
 						console.log(historyStack, forwardStack, "refster");
 						document.getElementById("ifd").onload = function(){
 							document.getElementById("ifd").contentWindow.document.write(prep(window.__files["files"][d.path], d.path));
-							document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/inject.js"]);
+							document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/js/inject.js"]);
 						}
 					}
 				} else if(d.type == "rescript"){

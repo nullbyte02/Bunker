@@ -486,7 +486,7 @@
 
   Emitter.prototype.on = Emitter.prototype.addEventListener = function (event, fn) {
     this._callbacks = this._callbacks || {};
-    (this._callbacks['$' + event] = this._callbacks['$' + event] || []).push(fn);
+    (this._callbacks['\x24' + event] = this._callbacks['\x24' + event] || []).push(fn);
     return this;
   };
   /**
@@ -530,11 +530,11 @@
     } // specific event
 
 
-    var callbacks = this._callbacks['$' + event];
+    var callbacks = this._callbacks['\x24' + event];
     if (!callbacks) return this; // remove all handlers
 
     if (1 == arguments.length) {
-      delete this._callbacks['$' + event];
+      delete this._callbacks['\x24' + event];
       return this;
     } // remove specific handler
 
@@ -553,7 +553,7 @@
 
 
     if (callbacks.length === 0) {
-      delete this._callbacks['$' + event];
+      delete this._callbacks['\x24' + event];
     }
 
     return this;
@@ -570,7 +570,7 @@
   Emitter.prototype.emit = function (event) {
     this._callbacks = this._callbacks || {};
     var args = new Array(arguments.length - 1),
-        callbacks = this._callbacks['$' + event];
+        callbacks = this._callbacks['\x24' + event];
 
     for (var i = 1; i < arguments.length; i++) {
       args[i - 1] = arguments[i];
@@ -599,7 +599,7 @@
 
   Emitter.prototype.listeners = function (event) {
     this._callbacks = this._callbacks || {};
-    return this._callbacks['$' + event] || [];
+    return this._callbacks['\x24' + event] || [];
   };
   /**
    * Check if this emitter has `event` handlers.

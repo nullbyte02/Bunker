@@ -21,7 +21,7 @@ async function authChat(){
 			localStorage.comm_session = d.session;
 			localStorage.comm_id = d.userId;
 			localStorage.comm_user = u;
-			location.href="apps/comms/pages/comm.html";
+			goInternal("/apps/comms/pages/comm.html");
 		} else if(d.status == "banned") {
 			var k = document.createElement("li");
 			k.textContent="You have been banned";

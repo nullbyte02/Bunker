@@ -1,4 +1,6 @@
-const urlq = new URLSearchParams(window.location.search);
+const urlq = new URLSearchParams(
+	(parent.document.getElementsByTagName("iframe")[0].src+"").split("?")[1]
+);
 const surl= "https://ytdl.4sure.ml/search";
 const q = urlq.get("q");
 if(q!=undefined){
@@ -19,7 +21,7 @@ function handleData(d){
 	const v = d["videos"];
 	for(var i in v){
 		var div = document.createElement("div");
-		div.setAttribute("onclick", `location.href="watch.html?id=${v[i]["id"]}"`);
+		div.setAttribute("onclick", `goInternal("/watch.html?id=${v[i]["id"]}")`);
 		div.innerHTML = `<h4>${v[i]["title"]}</h4><p class="vdesc">${v[i]["description"]}</p><p class="sub_d">${v[i]["author"]} - ${v[i]["metadata"]["published"]} - ${v[i]["metadata"]["duration"]["simple_text"]}</p>`;
 		document.getElementById("vwrap").appendChild(div);
 	}

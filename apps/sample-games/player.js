@@ -1,4 +1,6 @@
-const urlq = new URLSearchParams(window.location.search);
+const urlq = new URLSearchParams(
+	(parent.document.getElementsByTagName("iframe")[0].src+"").split("?")[1]
+);
 const f = urlq.get("f");
 const n = urlq.get("n");
 window.onerror = function(message, source, lineno, colno, error) {
