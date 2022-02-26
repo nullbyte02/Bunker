@@ -76,7 +76,7 @@
 			var historyStack = [];
 			var forwardStack = [];
 			function toggleMenu(){
-				console.log("toggle menu");
+				console.log("[EVENT] (Menu) {toggled}");
 				var state;
 				if(document.getElementById("imd").style.display == "flex"){
 					state=true;
@@ -97,7 +97,7 @@
 				}
 			}
 			function prep(h,path){
-				console.log("path "+path);
+				console.log(`[EVENT] (Loader) {loading ${path}}`)
 				const root = new URL(path, "https://example.com");
 				h=h+"";
 				var jm = /<script src=["'](.*?)["']><\/script>/g;
@@ -105,15 +105,9 @@
 				while(jg !== null){
 					jg[1]=new URL(jg[1], root.href).href;
 					jg[1]=jg[1].replace("https://example.com","");
-					console.log("replacing ",jg[0]+" with path "+jg[1]);
+					console.log(`[INFO] (Loader) {replacing ${jg[0]} with ${jg[1]}}`);
 					if(window.__files["files"][jg[1]] != undefined){
-						//console.log(`indexOf replaced: ${h.indexOf(jg[0])} with char ${h[h.indexOf(jg[0])]}`);
-						console.log("replacing script with index of special: "+(`<script>${window.__files["files"][jg[1]]}</script\>`).indexOf("'$'"))
 						h=h.replace(jg[0], `<script>${window.__files["files"][jg[1]]}</script\>`);
-						//console.log("<script>"+window.__files["files"][jg[1]]+"</script\>");
-					} else {
-						//console.log(jg[1]);
-						h=h.replace(jg[0], ``);
 					}
 					jg = jm.exec(h);
 				}
@@ -122,23 +116,20 @@
 				while(cg !== null){
 					cg[1]=new URL(cg[1], root.href).href;
 					cg[1]=cg[1].replace("https://example.com","");
-					console.log("replacing ",cg[0]+" with path "+cg[1]);
+					console.log(`[INFO] (Loader) {replacing ${cg[0]} with ${cg[1]}}`)
 					if(window.__files["files"][cg[1]] != undefined){
 						h=h.replace(cg[0], "<style>"+window.__files["files"][cg[1]]+"</style\>");
-					} else {
-						console.log(`ignoring wrong or external ${cg[1]}`);
 					}
 					cg = cm.exec(h);
 				}
 				var am = /<a.*?href=["'](.*?)["']/g;
 				var ag = am.exec(h);
 				while(ag !== null){
-					//console.log(ag[1].indexOf("http://"),ag[1].indexOf("https://"),ag[1].indexOf("javascript:"));
 					if(ag[1].indexOf("http://")==-1&&ag[1].indexOf("https://")==-1&&ag[1].indexOf("javascript:")==-1){
 						const old = ag[1];
 						ag[1]=new URL(ag[1], root.href).href;
 						ag[1]=ag[1].replace("https://example.com",""); 
-						console.log(`relinking ${ag[0]} to ${ag[1]} from root ${root.href}`);
+						console.log(`[INFO] (Loader) {relinking ${old} to ${ag[1]}}`);
 						ag[1]=encodeURIComponent(ag[1]);
 						if(ag[0].indexOf("'")==-1){
 							h=h.replace(`href="${old}"`, `href="javascript:goInternal('${ag[1]}')"`);
@@ -148,14 +139,13 @@
 					}
 					ag=am.exec(h);
 				}
-				//console.log(h);
 				return h;
 			}
 			async function loadPath(p,s){
 				if(s=="e"){
 					forwardStack=[];
 					historyStack.push(p);
-					console.log(historyStack, forwardStack);
+					console.log(`[EVENT] (History) {history altered with attached stacks}`, historyStack, forwardStack);
 				}
 				if(window.__files["files"][p]!=undefined){
 					document.getElementById("ifd").setAttribute("src", "about:blank");
@@ -215,9 +205,8 @@
 				} else if(d.type == "redirect"){
 					d.path=decodeURIComponent(d.path);
 					[d.path, d.query] = d.path.split("?");
-					console.log(`got ${d.path}`);
+					console.log(`[EVENT] (I2P) {redirecting to ${d.path}}`);
 					if(accessFile(d.path)!=false){
-						console.log("got "+d.path);
 						if(d.query!=undefined){
 							document.getElementById("ifd").setAttribute("src", "about:blank?"+d.query);
 						} else {
@@ -225,20 +214,20 @@
 						}
 						forwardStack=[];
 						historyStack.push(d.path);
-						console.log(historyStack, forwardStack, "refster");
+						console.log(`[EVENT] (History) {history altered with attached stacks}`, historyStack, forwardStack);
 						document.getElementById("ifd").onload = function(){
 							document.getElementById("ifd").contentWindow.document.write(prep(window.__files["files"][d.path], d.path));
 							document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/js/inject.js"]);
 						}
 					}
 				} else if(d.type == "rescript"){
-					console.log("rescripting elements");
+					console.log(`[EVENT] (I2P) {relinking scripts added to page}`);
 					var docc = document.getElementById("ifd").contentWindow.document;
 					var s = docc.getElementsByTagName("script");
 					for(var i=0;i<s.length;i++){
 						var src = s[i].getAttribute("src");
 						if(src!=undefined){if(src[0]!="/") src="/"+src;}
-						console.log(`replacing script with source '${src}'`)
+						console.log(`[INFO] (I2P) {replacing script with src ${src}}`);
 						if(accessFile(src)!=false){
 						   var div = document.createElement("div");
 							div.innerHTML = "<script>"+accessFile(src)+"</script\>";
@@ -273,7 +262,6 @@
 				if(b==0){
 					if(historyStack.length>0){
 						var p = historyStack.pop();
-						console.log(p);
 						loadPath(historyStack[historyStack.length-1],"b");
 						forwardStack.push(p);
 					}
@@ -289,7 +277,6 @@
 				} else if(b==3){
 					toggleMenu();
 				}
-				console.log(historyStack, forwardStack);
 			}
 			var esct = false;
 			window.addEventListener("keyup", function(e){

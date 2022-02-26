@@ -21,7 +21,7 @@ function handleData(d){
 	const v = d["videos"];
 	for(var i in v){
 		var div = document.createElement("div");
-		div.setAttribute("onclick", `goInternal("/watch.html?id=${v[i]["id"]}")`);
+		div.setAttribute("onclick", `goInternal("watch.html?id=${v[i]["id"]}")`);
 		div.innerHTML = `<h4>${v[i]["title"]}</h4><p class="vdesc">${v[i]["description"]}</p><p class="sub_d">${v[i]["author"]} - ${v[i]["metadata"]["published"]} - ${v[i]["metadata"]["duration"]["simple_text"]}</p>`;
 		document.getElementById("vwrap").appendChild(div);
 	}
