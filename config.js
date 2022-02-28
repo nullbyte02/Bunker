@@ -8,6 +8,7 @@ window._config = {
 		"conn_stats",
 		"hacker-news-tile",
 		"sample-games",
-		"count-down"
+		"count-down",
+		"schedule"
 	]
 }
