@@ -9,6 +9,7 @@ window.apps["info"]["tile"] = `<div class="box_widget">
 			<li><a href="apps/info/info.html">Details on Bunker</a></li>
 			<li><a href="apps/info/guiapp.html">Install an app</a></li>
 			<li><a href="apps/info/about.html">Technical bunker://about</a></li>
+			<li><a href="apps/count-down/countdown.html">Count down until school is over</a></li>
 			<li class="italic">(Includes information on system and apps)</li>
 		</ul>
 	</div>

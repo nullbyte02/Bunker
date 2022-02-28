@@ -7,6 +7,7 @@ window._config = {
 		"mpviewer",
 		"conn_stats",
 		"hacker-news-tile",
-		"sample-games"
+		"sample-games",
+		"count-down"
 	]
 }
