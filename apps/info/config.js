@@ -5,6 +5,7 @@ window.apps["info"]["tile"] = `<div class="box_widget">
 	</div>
 	<div>
 		<ul class="list">
+			<li><a href="apps/tutorial/tutorial.html">Tutorial On Bunker</a></li>
 			<li><a href="apps/info/settings.html"l>Change Settings</a></li>
 			<li><a href="apps/info/info.html">Details on Bunker</a></li>
 			<li><a href="apps/info/guiapp.html">Install an app</a></li>
