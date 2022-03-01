@@ -325,3 +325,15 @@ input,select:focus{
     text-shadow: 0 0 20px #fff, 0 0 30px #5A5A5A, 0 0 40px #5A5A5A, 0 0 50px #5A5A5A, 0 0 60px #5A5A5A, 0 0 70px #5A5A5A, 0 0 80px #5A5A5A;
   }
 }
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
