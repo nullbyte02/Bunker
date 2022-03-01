@@ -10,6 +10,7 @@ window._config = {
 		"sample-games",
 		"count-down",
 		"schedule",
-		"tutorial"
+		"tutorial",
+		"wordle"
 	]
 }
