@@ -1,6 +1,6 @@
 const server = "https://secure.4sure.ml";
 (async function(){
-	if(location.href.indexOf("file://") == -1){
+	if(location.href.indexOf("file://") == -1 && parent.document.getElementsByTagName("iframe")[0].getAttribute("src").indexOf("about:blank") == -1){
 		document.getElementById("noguard_stat").textContent = "NOT WORKING";
 		document.getElementById("noguard_stat").classList.add("red");
 	} else {

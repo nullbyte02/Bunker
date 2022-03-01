@@ -150,7 +150,7 @@
 				if(window.__files["files"][p]!=undefined){
 					document.getElementById("ifd").setAttribute("src", "about:blank");
 					document.getElementById("ifd").onload = function(){
-						document.getElementById("ifd").contentWindow.document.write(prep(window.__files["files"][p]));
+						document.getElementById("ifd").contentWindow.document.write(prep(window.__files["files"][p], p));
 						document.getElementById("ifd").contentWindow.window.eval(window.__files["files"]["/js/inject.js"]);
 					}
 				} else {
@@ -260,7 +260,7 @@
 			});
 			function buttonHandler(b){
 				if(b==0){
-					if(historyStack.length>0){
+					if(historyStack.length>1){
 						var p = historyStack.pop();
 						loadPath(historyStack[historyStack.length-1],"b");
 						forwardStack.push(p);
