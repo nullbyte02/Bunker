@@ -20,6 +20,9 @@
 	--accent-11: #C10000;
 }
 */
+html {
+  scroll-behavior: smooth;
+}
  .title{
   display: inline-block;
   color: white;
@@ -305,4 +308,32 @@ input,select:focus{
     60% { top: -150px; }
     80% { top: -200px; }
 }
+.glow {
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
 
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #000000, 0 0 40px #000000, 0 0 50px #000000, 0 0 60px #000000, 0 0 70px #000000;
+  }
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #5A5A5A, 0 0 40px #5A5A5A, 0 0 50px #5A5A5A, 0 0 60px #5A5A5A, 0 0 70px #5A5A5A, 0 0 80px #5A5A5A;
+  }
+}
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}

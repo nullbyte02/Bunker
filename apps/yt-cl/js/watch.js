@@ -1,7 +1,5 @@
 var socket = io("https://ytdl.4sure.ml");
-const urlq = new URLSearchParams(
-	(parent.document.getElementsByTagName("iframe")[0].src+"").split("?")[1]
-);
+const urlq = new URLSearchParams(window.location.search);
 const id = urlq.get("id");
 console.update = function(m){
 	document.getElementById("linfo").textContent = m;
